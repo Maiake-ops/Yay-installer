@@ -1,22 +1,24 @@
 #!/bin/bash
 
-# Update system
+# Update system (needs root)
 sudo pacman -Syu --noconfirm
 
-# Install required base-devel and git
+# Install required packages for building AUR packages
 sudo pacman -S --needed base-devel git --noconfirm
 
+# Switch to normal user directory (do NOT run as root)
+cd "$HOME"
+
 # Clone yay from AUR
-cd /tmp
 git clone https://aur.archlinux.org/yay.git
 cd yay
 
-# Build and install yay
+# Build and install yay as normal user
 makepkg -si --noconfirm
 
 # Cleanup
-cd ..
+cd "$HOME"
 rm -rf yay
 
-# Check yay version
+# Confirm yay installed
 yay --version
